@@ -1,4 +1,4 @@
-package com.example.mysql.controller;
+package com.example.todo.controller;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mysql.Entity.Todo;
-import com.example.mysql.service.TodoService;
+import com.example.todo.Entity.Todo;
+import com.example.todo.service.TodoService;
 
 import jakarta.validation.Valid;
 

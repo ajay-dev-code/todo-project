@@ -1,23 +1,20 @@
-package com.example.mysql.controller;
+package com.example.todo.controller;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mysql.Entity.UserLogin;
-import com.example.mysql.Util.JwtUtil;
-import com.example.mysql.repository.UserLoginRepository;
-import com.example.mysql.service.UserLoginService;
+import com.example.todo.Entity.UserLogin;
+import com.example.todo.Util.JwtUtil;
+import com.example.todo.repository.UserLoginRepository;
+import com.example.todo.service.UserLoginService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,8 +32,7 @@ public class AuthController {
 	public ResponseEntity<String> registerUser(@RequestBody Map<String, String> body) {
 		String email = body.get("email");
 		String password = passwordEncoder.encode(body.get("password"));
-		
-		
+
 		if (userrepo.findByEmail(email).isPresent()) {
 			return new ResponseEntity<>("Email alredy exists", HttpStatus.CONFLICT);
 		}
@@ -60,9 +56,7 @@ public class AuthController {
 		}
 		String token = jwtUtil.genrateToken(email);
 
-		return ResponseEntity.ok(Map.of("token", token)); 
+		return ResponseEntity.ok(Map.of("token", token));
 	}
-
-	
 
 }

@@ -1,13 +1,13 @@
-package com.example.mysql;
+package com.example.todo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MysqlApplication {
+public class todoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MysqlApplication.class, args);
+		SpringApplication.run(todoApplication.class, args);
 	}
 
 }

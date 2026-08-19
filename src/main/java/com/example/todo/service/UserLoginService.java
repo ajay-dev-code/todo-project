@@ -1,4 +1,4 @@
-package com.example.mysql.service;
+package com.example.todo.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.mysql.Entity.UserLogin;
-import com.example.mysql.repository.UserLoginRepository;
+import com.example.todo.Entity.UserLogin;
+import com.example.todo.repository.UserLoginRepository;
 
 @Service
 public class UserLoginService {

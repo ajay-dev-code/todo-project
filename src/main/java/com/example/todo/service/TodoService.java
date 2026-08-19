@@ -1,4 +1,4 @@
-package com.example.mysql.service;
+package com.example.todo.service;
 
 
 
@@ -7,9 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.mysql.Entity.Todo;
-
-import com.example.mysql.repository.TodoRepository;
+import com.example.todo.Entity.Todo;
+import com.example.todo.repository.TodoRepository;
 
 @Service
 public class TodoService {

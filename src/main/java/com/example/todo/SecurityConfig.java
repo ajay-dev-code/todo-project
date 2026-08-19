@@ -1,4 +1,4 @@
-package com.example.mysql;
+package com.example.todo;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.example.mysql.Util.JwtFilter;
+import com.example.todo.Util.JwtFilter;
 
 @CrossOrigin
 @Configuration

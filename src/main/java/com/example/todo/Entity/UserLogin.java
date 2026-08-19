@@ -1,4 +1,4 @@
-package com.example.mysql.Entity;
+package com.example.todo.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
