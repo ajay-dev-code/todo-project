@@ -1,6 +1,6 @@
 
 
-const SERVER_URL = "http://localhost:8080";
+const SERVER_URL = "https://profound-creativity-production-ee37.up.railway.app";
 const token = localStorage.getItem("token");
 
 // Login page logic
@@ -160,7 +160,7 @@ function addTodo() {
         method:"POST",
         headers:{"Content-Type" : "application/json",
             Authorization : `Bearer ${token}`},
-            body: JSON.stringify({title:todotext  , Completed: false})
+            body: JSON.stringify({title:todotext  , completed: false})
     })
 
     .then(async(response)=>{
