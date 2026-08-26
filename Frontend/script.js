@@ -1,7 +1,10 @@
 
 
 const SERVER_URL = "https://profound-creativity-production-ee37.up.railway.app";
-const token = localStorage.getItem("token");
+
+function getToken() {
+    return localStorage.getItem("token");
+}
 
 // Login page logic
 function login() {
@@ -112,7 +115,7 @@ function loadTodos() {
     }
     fetch(`${SERVER_URL}/api/todos`,{
         method:"GET",
-        headers:{ Authorization : `Bearer ${token}`}
+        headers:{ Authorization: `Bearer ${getToken()}`}
             
     })
 
@@ -147,86 +150,136 @@ function loadTodos() {
 
 function addTodo() {
 
-    const input =  document.getElementById("new-todo");
+    const input = document.getElementById("new-todo");
     const todotext = input.value.trim();
 
-    if(!todotext) return;
+    if (!todotext) return;
 
-    console.log({
-    title: todotext,
-    Completed: false
-});
-    fetch(`${SERVER_URL}/api/todos`,{
-        method:"POST",
-        headers:{"Content-Type" : "application/json",
-            Authorization : `Bearer ${token}`},
-            body: JSON.stringify({title:todotext  , completed: false})
+    fetch(`${SERVER_URL}/api/todos`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify({
+            title: todotext,
+            completed: false
+        })
     })
 
-    .then(async(response)=>{
-         const data = await response.json();
+    .then(async (response) => {
+        const data = await response.json();
+
         if (!response.ok) {
-            throw new Error(data.message ||" Failed to update todos");
+            throw new Error(data.message || "Failed to add todo");
         }
+
         return data;
     })
-    .then((newtodo)=>{
-        input.value="";
+
+    .then(() => {
+        input.value = "";
         loadTodos();
     })
 
-    .catch(error=>
-        {
-            alert(error.message);
-        })
+    .catch(error => {
+        alert(error.message);
+    });
 }
 
 function updateTodoStatus(todo) {
 
-    fetch(`${SERVER_URL}/api/todos/${todo.id}`,{
-        method:"PUT",
-        headers:{"Content-Type" : "application/json",
-             Authorization : `Bearer ${token}`},
-            body: JSON.stringify({
-                title: todo.title,
+    fetch(`${SERVER_URL}/api/todos/${todo.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`
+        },
+        body: JSON.stringify({
+            title: todo.title,
             completed: todo.completed
-            })
+        })
     })
 
-    .then(async(response)=>{
-         const data = await response.json();
+    .then(async (response) => {
+        const data = await response.json();
+
         if (!response.ok) {
-            throw new Error(data.message ||" Failed to update todos");
+            throw new Error(data.message || "Failed to update todo");
         }
+
         return data;
     })
-    .then(() => loadTodos())
 
-    .catch(error=>
-        {
-            alert(error.message);
-        })
+    .then(() => {
+        loadTodos();
+    })
+
+    .catch(error => {
+        alert(error.message);
+    });
 }
 
 function deleteTodo(id) {
 
     fetch(`${SERVER_URL}/api/todos/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` }
-    })
-
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Failed to delete todo");
+        headers: {
+            "Authorization": `Bearer ${getToken()}`
         }
-        return true ;
     })
 
-    .then(() => loadTodos())   
+    .then(async (response) => {
+
+        if (!response.ok) {
+            let message = "Failed to delete todo";
+
+            try {
+                const data = await response.json();
+                message = data.message || message;
+            } catch (error) {
+                // Response has no JSON body
+            }
+
+            throw new Error(message);
+        }
+
+        return response;
+    })
+
+    .then(() => {
+        loadTodos();
+    })
 
     .catch(error => {
         alert(error.message);
-    })
+    });
+}
+
+function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+}
+function togglePassword() {
+
+    const password = document.getElementById("password");
+    const eyeOpen = document.getElementById("eyeOpen");
+    const eyeClosed = document.getElementById("eyeClosed");
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+        eyeOpen.style.display = "none";
+        eyeClosed.style.display = "block";
+
+    } else {
+
+        password.type = "password";
+
+        eyeOpen.style.display = "block";
+        eyeClosed.style.display = "none";
+    }
 }
 
 
