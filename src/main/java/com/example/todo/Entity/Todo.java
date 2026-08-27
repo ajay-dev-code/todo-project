@@ -1,7 +1,8 @@
 package com.example.todo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,43 +15,74 @@ import jakarta.persistence.Table;
 @Table(name = "todos")
 public class Todo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String title;
+	private String title;
 
-    private boolean completed;
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserLogin user;
+	private boolean completed;
 
-    public Long getId() {
-        return id;
-    }
+	@Column(columnDefinition = "TEXT")
+	private String content;
 
-    public String getTitle() {
-        return title;
-    }
+	private String mood;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	private LocalDate entryDate;
+	
+	 @ManyToOne
+	    @JoinColumn(name = "user_id")
+	    private UserLogin user;
 
-    public boolean isCompleted() {
-        return completed;
-    }
+	public Long getId() {
+	    return id;
+	}
+	public String getTitle() {
+		return title;
+	}
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public UserLogin getUser() {
-        return user;
-    }
+	public boolean isCompleted() {
+		return completed;
+	}
 
-    public void setUser(UserLogin user) {
-        this.user = user;
-    }
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getMood() {
+		return mood;
+	}
+
+	public void setMood(String mood) {
+		this.mood = mood;
+	}
+
+	public LocalDate getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(LocalDate entryDate) {
+		this.entryDate = entryDate;
+	}
+	public UserLogin getUser() {
+	    return user;
+	}
+
+	public void setUser(UserLogin user) {
+	    this.user = user;
+	}
+
+
 }

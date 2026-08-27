@@ -28,17 +28,22 @@ public class AuthController {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
 
+	
+	private ResponseEntity<Map<String, String>> message(String text, HttpStatus status) {
+		return new ResponseEntity<>(Map.of("message", text), status);
+	}
+
 	@PostMapping("/register")
-	public ResponseEntity<String> registerUser(@RequestBody Map<String, String> body) {
+	public ResponseEntity<Map<String, String>> registerUser(@RequestBody Map<String, String> body) {
 		String email = body.get("email");
 		String password = passwordEncoder.encode(body.get("password"));
 
 		if (userrepo.findByEmail(email).isPresent()) {
-			return new ResponseEntity<>("Email alredy exists", HttpStatus.CONFLICT);
+			return message("That email is already registered. Please sign in instead.", HttpStatus.CONFLICT);
 		}
 
 		service.createUser(UserLogin.builder().email(email).password(password).build());
-		return new ResponseEntity<>("Succesfully register", HttpStatus.CREATED);
+		return message("Account created successfully.", HttpStatus.CREATED);
 	}
 
 	@PostMapping("/login")
@@ -48,11 +53,12 @@ public class AuthController {
 
 		var UserLoginOptional = userrepo.findByEmail(email);
 		if (UserLoginOptional.isEmpty()) {
-			return new ResponseEntity<>("User not Registered ", HttpStatus.UNAUTHORIZED);
+			return message("This email is not registered yet. Please create an account first.",
+					HttpStatus.UNAUTHORIZED);
 		}
 		UserLogin userLogin = UserLoginOptional.get();
 		if (!passwordEncoder.matches(password, userLogin.getPassword())) {
-			return new ResponseEntity<>("Invalid User", HttpStatus.UNAUTHORIZED);
+			return message("Incorrect password. Please try again.", HttpStatus.UNAUTHORIZED);
 		}
 		String token = jwtUtil.genrateToken(email);
 

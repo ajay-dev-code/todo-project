@@ -35,14 +35,15 @@ public class TodoService {
 		return todorepo.findByUser(user);
 	}
 
+	
 	public Todo getById(Long id, String email) {
 
 		UserLogin user = userrepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
-		Todo todo = todorepo.findById(id).orElseThrow(() -> new RuntimeException("Todo not found"));
+		Todo todo = todorepo.findById(id).orElseThrow(() -> new RuntimeException("My Diary not found"));
 
 		if (!todo.getUser().getId().equals(user.getId())) {
-			throw new RuntimeException("You are not allowed to access this todo");
+			throw new RuntimeException("You are not allowed to access this Diary");
 		}
 
 		return todo;
@@ -52,13 +53,16 @@ public class TodoService {
 
 		UserLogin user = userrepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
-		Todo existing = todorepo.findById(id).orElseThrow(() -> new RuntimeException("Todo not found"));
+		Todo existing = todorepo.findById(id).orElseThrow(() -> new RuntimeException("My Diary not found"));
 
 		if (!existing.getUser().getId().equals(user.getId())) {
-			throw new RuntimeException("You are not allowed to update this todo");
+			throw new RuntimeException("You are not allowed to update this Diary");
 		}
-
+		
 		existing.setTitle(todo.getTitle());
+		existing.setContent(todo.getContent());
+		existing.setMood(todo.getMood());
+		existing.setEntryDate(todo.getEntryDate());
 		existing.setCompleted(todo.isCompleted());
 
 		return todorepo.save(existing);
@@ -68,10 +72,10 @@ public class TodoService {
 
 		UserLogin user = userrepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
-		Todo todo = todorepo.findById(id).orElseThrow(() -> new RuntimeException("Todo not found"));
+		Todo todo = todorepo.findById(id).orElseThrow(() -> new RuntimeException("My Diary not found"));
 
 		if (!todo.getUser().getId().equals(user.getId())) {
-			throw new RuntimeException("You are not allowed to delete this todo");
+			throw new RuntimeException("You are not allowed to delete this Diary");
 		}
 
 		todorepo.delete(todo);

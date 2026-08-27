@@ -21,7 +21,7 @@ import com.example.todo.service.TodoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/todos")
+@RequestMapping("/api/diary")
 public class TodoController {
 
 	@Autowired
@@ -75,6 +75,6 @@ public class TodoController {
 
 		todoservice.deleteTodoId(id, email);
 
-		return ResponseEntity.ok("Todo Deleted Successfully!");
+		return ResponseEntity.ok("Diary Deleted Successfully!");
 	}
 }
